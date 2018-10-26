@@ -24,4 +24,12 @@ public class TODOService {
 	public void save(TODOEntity body) {
 		todoRepository.save(body);
 	}
+
+	public void delete(Long id) {
+		todoRepository.delete(id);
+	}
+
+	public TODOEntity getOne(long id) {
+		return todoRepository.findOne(id);
+	}
 }

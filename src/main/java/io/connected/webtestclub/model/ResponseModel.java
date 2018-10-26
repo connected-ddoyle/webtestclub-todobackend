@@ -1,6 +1,6 @@
 package io.connected.webtestclub.model;
 
-public abstract class ResponseModel<T> {
+public class ResponseModel<T> {
 	public final String message;
 	public final T body;
 

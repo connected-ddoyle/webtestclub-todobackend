@@ -22,16 +22,30 @@ public class TODOController {
 		this.todoService = todoService;
 	}
 
-	@GetMapping(name = "/", produces = "application/json")
+	@GetMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<List<TODOEntity>> get(){
-		return new ResponseEntity<>(todoService.getAll(), HttpStatus.OK);
+	ResponseEntity<ResponseModel<List<TODOEntity>>> getAll(){
+		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getAll()), HttpStatus.OK);
 	}
 
-	@PostMapping(name = "/", produces = "application/json")
+	@GetMapping(value = "/{id}", produces = "application/json")
+	public @ResponseBody
+	ResponseEntity<ResponseModel<TODOEntity>> getOne(@PathVariable long id){
+		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getOne(id)), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
 	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOEntity body){
 		todoService.save(body);
 		return new ResponseEntity<>(new ResponseModel.Simple("Created!"), HttpStatus.CREATED);
 	}
+
+	@DeleteMapping(value = "/{id}", produces = "application/json")
+	public @ResponseBody
+	ResponseEntity<ResponseModel.Simple> delete(@PathVariable Long	 id){
+		todoService.delete(id);
+		return new ResponseEntity<>(new ResponseModel.Simple("Ok!"), HttpStatus.OK);
+	}
+
 }

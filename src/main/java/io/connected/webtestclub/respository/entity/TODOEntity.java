@@ -6,18 +6,18 @@ import javax.persistence.*;
 @Table(name = "todo")
 public class TODOEntity {
 
-	private int id;
+	private long id;
 	private String todo;
 
 	@Id
 	@SequenceGenerator(name="todoSeq",sequenceName="todo_id_seq")
 	@GeneratedValue(strategy= GenerationType.SEQUENCE,generator="todoSeq")
 	@Column(name = "id", nullable = false)
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
