@@ -1,5 +1,7 @@
 package io.connected.webtestclub.controller;
 
+import io.connected.webtestclub.exception.DoesNotExistException;
+import io.connected.webtestclub.exception.InvalidTodoNameException;
 import io.connected.webtestclub.model.ResponseModel;
 import io.connected.webtestclub.respository.entity.TODOEntity;
 import io.connected.webtestclub.service.TODOService;
@@ -37,14 +39,23 @@ public class TODOController {
 	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
 	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOEntity body){
-		todoService.save(body);
+		try {
+			todoService.save(body);
+		} catch (InvalidTodoNameException e) {
+			return new ResponseEntity<>(new ResponseModel.Simple("Invalid todo name"), HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>(new ResponseModel.Simple("Created!"), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
 	ResponseEntity<ResponseModel.Simple> delete(@PathVariable Long	 id){
-		todoService.delete(id);
+		try {
+			todoService.delete(id);
+		} catch (DoesNotExistException dnee) {
+			return new ResponseEntity<>(new ResponseModel.Simple("Non existing todo id"), HttpStatus.NOT_FOUND);
+		}
+
 		return new ResponseEntity<>(new ResponseModel.Simple("Ok!"), HttpStatus.OK);
 	}
 
