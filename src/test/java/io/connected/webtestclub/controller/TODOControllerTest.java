@@ -1,16 +1,16 @@
 package io.connected.webtestclub.controller;
 
-import io.connected.webtestclub.exception.DoesNotExistException;
-import io.connected.webtestclub.exception.InvalidTodoNameException;
+import io.connected.webtestclub.exception.controller.BadRequestException;
+import io.connected.webtestclub.exception.controller.NotFoundException;
+import io.connected.webtestclub.exception.service.DoesNotExistException;
+import io.connected.webtestclub.exception.service.InvalidTodoNameException;
 import io.connected.webtestclub.model.ResponseModel;
-import io.connected.webtestclub.respository.TODORepository;
 import io.connected.webtestclub.respository.entity.TODOEntity;
 import io.connected.webtestclub.service.TODOService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doThrow;
@@ -29,7 +29,7 @@ public class TODOControllerTest {
     }
 
     @Test()
-    public void shouldReturnBadRequestIfInvalidName() throws InvalidTodoNameException {
+    public void shouldReturnBadRequestIfInvalidName() throws InvalidTodoNameException, BadRequestException {
         when(service.save(any())).thenThrow(new InvalidTodoNameException());
         TODOEntity entity = new TODOEntity();
         entity.setTodo("");
@@ -40,7 +40,7 @@ public class TODOControllerTest {
     }
 
     @Test()
-    public void shouldReturnNotFoundIfNonExistingId() throws DoesNotExistException {
+    public void shouldReturnNotFoundIfNonExistingId() throws DoesNotExistException, NotFoundException {
         doThrow(new DoesNotExistException()).when(service).delete(anyLong());
 
         ResponseEntity<ResponseModel.Simple> response = controller.delete(42L);

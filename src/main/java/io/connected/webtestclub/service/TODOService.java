@@ -1,7 +1,7 @@
 package io.connected.webtestclub.service;
 
-import io.connected.webtestclub.exception.DoesNotExistException;
-import io.connected.webtestclub.exception.InvalidTodoNameException;
+import io.connected.webtestclub.exception.service.DoesNotExistException;
+import io.connected.webtestclub.exception.service.InvalidTodoNameException;
 import io.connected.webtestclub.respository.TODORepository;
 import io.connected.webtestclub.respository.entity.TODOEntity;
 import org.springframework.beans.factory.annotation.Autowired;
