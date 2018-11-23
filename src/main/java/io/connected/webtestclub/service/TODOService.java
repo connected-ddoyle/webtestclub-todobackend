@@ -1,6 +1,7 @@
 package io.connected.webtestclub.service;
 
 import io.connected.webtestclub.exception.service.DoesNotExistException;
+import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
 import io.connected.webtestclub.respository.TODORepository;
 import io.connected.webtestclub.respository.entity.TODOEntity;
@@ -24,10 +25,16 @@ public class TODOService {
 		return todoRepository.findAll();
 	}
 
-	public TODOEntity save(TODOEntity body) throws InvalidTodoNameException {
+	public TODOEntity save(TODOEntity body) throws InvalidTodoNameException, DuplicateEntryException {
 
 		if(body.getTodo() == null || body.getTodo().trim().length() == 0)
 			throw new InvalidTodoNameException();
+
+		TODOEntity result = todoRepository.findTODOEntityByTodo(body.getTodo());
+
+		if (result != null) {
+			throw new DuplicateEntryException();
+		}
 
 		return todoRepository.save(body);
 	}
@@ -40,7 +47,7 @@ public class TODOService {
 		}
 	}
 
-	public TODOEntity getOne(long id) {
+	public TODOEntity getById(long id) {
 		return todoRepository.findOne(id);
 	}
 }

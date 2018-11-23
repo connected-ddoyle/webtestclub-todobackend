@@ -1,8 +1,10 @@
 package io.connected.webtestclub.controller;
 
 import io.connected.webtestclub.exception.controller.BadRequestException;
+import io.connected.webtestclub.exception.controller.ConflictException;
 import io.connected.webtestclub.exception.controller.NotFoundException;
 import io.connected.webtestclub.exception.service.DoesNotExistException;
+import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
 import io.connected.webtestclub.model.ResponseModel;
 import io.connected.webtestclub.respository.entity.TODOEntity;
@@ -35,17 +37,19 @@ public class TODOController {
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<TODOEntity>> getOne(@PathVariable long id){
-		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getOne(id)), HttpStatus.OK);
+	ResponseEntity<ResponseModel<TODOEntity>> getById(@PathVariable long id){
+		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getById(id)), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOEntity body) throws BadRequestException {
+	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOEntity body) throws BadRequestException, ConflictException {
 		try {
 			todoService.save(body);
 		} catch (InvalidTodoNameException e) {
 			throw new BadRequestException(e);
+		} catch (DuplicateEntryException e) {
+			throw new ConflictException(e);
 		}
 		return new ResponseEntity<>(new ResponseModel.Simple("Created!"), HttpStatus.CREATED);
 	}
