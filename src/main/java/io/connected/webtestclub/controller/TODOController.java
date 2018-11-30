@@ -1,5 +1,6 @@
 package io.connected.webtestclub.controller;
 
+import io.connected.webtestclub.exception.HTTPException;
 import io.connected.webtestclub.exception.controller.BadRequestException;
 import io.connected.webtestclub.exception.controller.ConflictException;
 import io.connected.webtestclub.exception.controller.NotFoundException;
@@ -43,7 +44,7 @@ public class TODOController {
 
 	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOEntity body) throws BadRequestException, ConflictException {
+	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOEntity body) throws HTTPException {
 		try {
 			todoService.save(body);
 		} catch (InvalidTodoNameException e) {
@@ -56,7 +57,7 @@ public class TODOController {
 
 	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> delete(@PathVariable Long	 id) throws NotFoundException {
+	ResponseEntity<ResponseModel.Simple> delete(@PathVariable Long	 id) throws HTTPException {
 		try {
 			todoService.delete(id);
 		} catch (DoesNotExistException dnee) {

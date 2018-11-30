@@ -1,0 +1,12 @@
+Next Lesson:
+- Continue writing tests for basic methods
+- Exception handling
+
+
+Suggestions for future sessions:
+- [BE] Introduction of Users
+- [BO] Tie Todo to User
+- [BO] Authentication
+- [BO] Containerization (Docker)
+- [BE] https://pgtap.org/9
+- [FE] Puppeteer
