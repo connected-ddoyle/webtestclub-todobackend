@@ -1,5 +1,6 @@
 package io.connected.webtestclub.model;
 
+@SuppressWarnings("WeakerAccess")
 public class ResponseModel<T> {
 	public final String message;
 	public final T body;

@@ -7,8 +7,9 @@ import io.connected.webtestclub.exception.controller.NotFoundException;
 import io.connected.webtestclub.exception.service.DoesNotExistException;
 import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
+import io.connected.webtestclub.model.DetailedTODOModel;
 import io.connected.webtestclub.model.ResponseModel;
-import io.connected.webtestclub.respository.entity.TODOEntity;
+import io.connected.webtestclub.model.TODOModel;
 import io.connected.webtestclub.service.TODOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,19 +33,19 @@ public class TODOController {
 
 	@GetMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<List<TODOEntity>>> getAll(){
+	ResponseEntity<ResponseModel<List<DetailedTODOModel>>> getAll(){
 		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getAll()), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<TODOEntity>> getById(@PathVariable long id){
+	ResponseEntity<ResponseModel<TODOModel>> getById(@PathVariable long id){
 		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getById(id)), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOEntity body) throws HTTPException {
+	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOModel body) throws HTTPException {
 		try {
 			todoService.save(body);
 		} catch (InvalidTodoNameException e) {

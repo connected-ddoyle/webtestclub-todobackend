@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '1.5.10.RELEASE'
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
 
 group 'io.connected.webtestclub'
@@ -21,4 +21,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.8.4'
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+}
+
+dependencyManagement {
+    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE") }
 }

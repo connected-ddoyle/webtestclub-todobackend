@@ -3,6 +3,8 @@ package io.connected.webtestclub.service;
 import io.connected.webtestclub.exception.service.DoesNotExistException;
 import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
+import io.connected.webtestclub.model.DetailedTODOModel;
+import io.connected.webtestclub.model.TODOModel;
 import io.connected.webtestclub.respository.TODORepository;
 import io.connected.webtestclub.respository.entity.TODOEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TODOService {
@@ -21,11 +25,11 @@ public class TODOService {
 		this.todoRepository = todoRepository;
 	}
 
-	public List<TODOEntity> getAll() {
-		return todoRepository.findAll();
+	public List<DetailedTODOModel> getAll() {
+		return todoRepository.findAll().stream().map(DetailedTODOModel::new).collect(Collectors.toList());
 	}
 
-	public TODOEntity save(TODOEntity body) throws InvalidTodoNameException, DuplicateEntryException {
+	public TODOEntity save(TODOModel body) throws InvalidTodoNameException, DuplicateEntryException {
 
 		if(body.getTodo() == null || body.getTodo().trim().length() == 0)
 			throw new InvalidTodoNameException();
@@ -36,18 +40,19 @@ public class TODOService {
 			throw new DuplicateEntryException();
 		}
 
-		return todoRepository.save(body);
+		return todoRepository.save(body.toEntity());
 	}
 
 	public void delete(Long id) throws DoesNotExistException {
 		try {
-			todoRepository.delete(id);
+			todoRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException erdae) {
 			throw new DoesNotExistException();
 		}
 	}
 
-	public TODOEntity getById(long id) {
-		return todoRepository.findOne(id);
+	public TODOModel getById(long id) {
+		Optional<TODOEntity> result = todoRepository.findById(id);
+		return result.map(TODOModel::new).orElse(null);
 	}
 }
