@@ -5,7 +5,7 @@ import io.connected.webtestclub.respository.entity.UserEntity;
 
 import java.sql.Timestamp;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class UserModel {
 	protected int id;
 	protected Timestamp createdDate;
