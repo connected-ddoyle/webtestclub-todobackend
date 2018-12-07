@@ -5,6 +5,7 @@ import io.connected.webtestclub.respository.entity.UserEntity;
 
 import java.sql.Timestamp;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class UserModel {
 	protected int id;
 	protected Timestamp createdDate;
@@ -12,6 +13,17 @@ public abstract class UserModel {
 	protected String password;
 	protected String username;
 
+	protected UserModel() {}
+
+	protected UserModel(UserEntity userEntity) {
+		this.id = userEntity.getId();
+		this.createdDate = userEntity.getCreatedDate();
+		this.password = userEntity.getPassword();
+		this.username = userEntity.getUsername();
+		this.email = userEntity.getEmail();
+	}
+
+	@JsonIgnore
 	public UserEntity getEntity() {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setCreatedDate(createdDate);
@@ -23,6 +35,12 @@ public abstract class UserModel {
 	}
 
 	public static class SimpleUserModel extends UserModel{
+		public SimpleUserModel(UserEntity user) {
+			super(user);
+		}
+		public SimpleUserModel() {
+		}
+
 		@JsonIgnore
 		public int getId() {
 			return id;
@@ -69,6 +87,12 @@ public abstract class UserModel {
 
 	}
 	public static class DetailedUserModel extends UserModel{
+		public DetailedUserModel(){}
+
+		public DetailedUserModel(UserEntity userEntity){
+			super(userEntity);
+		}
+
 		public int getId() {
 			return id;
 		}

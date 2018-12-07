@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 @CrossOrigin(origins = "*")
 @RequestMapping("/user")
@@ -23,8 +25,8 @@ public class UserController {
 
 	@GetMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<UserModel>> getCurrentUser(@RequestAttribute("user") UserModel userModel){
-		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,userModel), HttpStatus.OK);
+	ResponseEntity<ResponseModel<UserModel>> getCurrentUser(Principal principal){
+		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,userService.getUser(principal.getName())), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/register", produces = "application/json")

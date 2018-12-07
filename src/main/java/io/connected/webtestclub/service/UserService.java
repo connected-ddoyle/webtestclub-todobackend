@@ -23,4 +23,8 @@ public class UserService {
 		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 		usersRepository.save(userEntity);
 	}
+
+	public UserModel.SimpleUserModel getUser(String username) {
+		return new UserModel.SimpleUserModel(usersRepository.findByUsername(username));
+	}
 }
