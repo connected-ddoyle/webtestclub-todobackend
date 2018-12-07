@@ -1,4 +1,4 @@
-package io.connected.webtestclub.model;
+package io.connected.webtestclub.model.generic;
 
 @SuppressWarnings("WeakerAccess")
 public class ResponseModel<T> {

@@ -1,4 +1,4 @@
-package io.connected.webtestclub.model;
+package io.connected.webtestclub.model.generic;
 
 public class ErrorResponseModel {
 	public final int code;

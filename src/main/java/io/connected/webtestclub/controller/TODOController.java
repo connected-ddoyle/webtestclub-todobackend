@@ -7,9 +7,8 @@ import io.connected.webtestclub.exception.controller.NotFoundException;
 import io.connected.webtestclub.exception.service.DoesNotExistException;
 import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
-import io.connected.webtestclub.model.DetailedTODOModel;
-import io.connected.webtestclub.model.ResponseModel;
 import io.connected.webtestclub.model.TODOModel;
+import io.connected.webtestclub.model.generic.ResponseModel;
 import io.connected.webtestclub.service.TODOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,13 +32,13 @@ public class TODOController {
 
 	@GetMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<List<DetailedTODOModel>>> getAll(){
+	ResponseEntity<ResponseModel<List<TODOModel.DetailedTODOModel>>> getAll(){
 		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getAll()), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<TODOModel>> getById(@PathVariable long id){
+	ResponseEntity<ResponseModel<TODOModel.SimpleTODOModel>> getById(@PathVariable long id){
 		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getById(id)), HttpStatus.OK);
 	}
 

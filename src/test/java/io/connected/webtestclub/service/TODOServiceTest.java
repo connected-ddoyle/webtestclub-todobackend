@@ -3,6 +3,7 @@ package io.connected.webtestclub.service;
 import io.connected.webtestclub.exception.service.DoesNotExistException;
 import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
+import io.connected.webtestclub.model.TODOModel;
 import io.connected.webtestclub.respository.TODORepository;
 import io.connected.webtestclub.respository.entity.TODOEntity;
 import org.junit.Before;
@@ -24,21 +25,23 @@ public class TODOServiceTest {
 
 	@Test(expected = InvalidTodoNameException.class)
 	public void saveAnInvalidItem() throws InvalidTodoNameException, DuplicateEntryException {
-		TODOEntity entity = new TODOEntity();
+		TODOModel.SimpleTODOModel entity = new TODOModel.SimpleTODOModel();
 		service.save(entity);
 	}
 
 	@Test(expected = DoesNotExistException.class)
 	public void deleteAnInvalidItem() throws DoesNotExistException {
-		doThrow(new EmptyResultDataAccessException(0)).when(mockRepository).delete(anyLong());
+		doThrow(new EmptyResultDataAccessException(0)).when(mockRepository).deleteById(anyLong());
 		long invalidId = 37;
 		service.delete(invalidId);
 	}
 
 	@Test(expected = DuplicateEntryException.class)
 	public void saveATodoItem_shouldFail_whenDuplicateItemExists() throws InvalidTodoNameException, DuplicateEntryException {
-		doThrow(new DuplicateEntryException()).when(mockRepository).save(any(TODOEntity.class));
-		service.save(new TODOEntity());
+		doReturn(new TODOEntity()).when(mockRepository).findTODOEntityByTodo(anyString());
+		TODOModel.SimpleTODOModel data = new TODOModel.SimpleTODOModel();
+		data.setTodo("x");
+		service.save(data);
 	}
 
 }

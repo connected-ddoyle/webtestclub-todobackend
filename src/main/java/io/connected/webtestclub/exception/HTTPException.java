@@ -1,6 +1,6 @@
 package io.connected.webtestclub.exception;
 
-import io.connected.webtestclub.model.ErrorResponseModel;
+import io.connected.webtestclub.model.generic.ErrorResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

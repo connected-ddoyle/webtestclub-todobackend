@@ -1,7 +1,7 @@
 package io.connected.webtestclub.controller;
 
-import io.connected.webtestclub.model.ResponseModel;
 import io.connected.webtestclub.model.UserModel;
+import io.connected.webtestclub.model.generic.ResponseModel;
 import io.connected.webtestclub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

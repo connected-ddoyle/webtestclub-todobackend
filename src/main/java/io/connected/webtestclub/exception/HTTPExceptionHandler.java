@@ -1,6 +1,6 @@
 package io.connected.webtestclub.exception;
 
-import io.connected.webtestclub.model.ErrorResponseModel;
+import io.connected.webtestclub.model.generic.ErrorResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

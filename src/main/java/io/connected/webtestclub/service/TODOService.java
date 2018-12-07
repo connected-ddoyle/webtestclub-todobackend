@@ -3,7 +3,6 @@ package io.connected.webtestclub.service;
 import io.connected.webtestclub.exception.service.DoesNotExistException;
 import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
-import io.connected.webtestclub.model.DetailedTODOModel;
 import io.connected.webtestclub.model.TODOModel;
 import io.connected.webtestclub.respository.TODORepository;
 import io.connected.webtestclub.respository.entity.TODOEntity;
@@ -25,8 +24,8 @@ public class TODOService {
 		this.todoRepository = todoRepository;
 	}
 
-	public List<DetailedTODOModel> getAll() {
-		return todoRepository.findAll().stream().map(DetailedTODOModel::new).collect(Collectors.toList());
+	public List<TODOModel.DetailedTODOModel> getAll() {
+		return todoRepository.findAll().stream().map(TODOModel.DetailedTODOModel::new).collect(Collectors.toList());
 	}
 
 	public TODOEntity save(TODOModel body) throws InvalidTodoNameException, DuplicateEntryException {
@@ -51,8 +50,8 @@ public class TODOService {
 		}
 	}
 
-	public TODOModel getById(long id) {
+	public TODOModel.SimpleTODOModel getById(long id) {
 		Optional<TODOEntity> result = todoRepository.findById(id);
-		return result.map(TODOModel::new).orElse(null);
+		return result.map(TODOModel.SimpleTODOModel::new).orElse(null);
 	}
 }

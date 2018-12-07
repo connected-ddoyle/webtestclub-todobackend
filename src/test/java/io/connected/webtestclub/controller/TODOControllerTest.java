@@ -1,12 +1,14 @@
 package io.connected.webtestclub.controller;
 
+import io.connected.webtestclub.exception.HTTPException;
 import io.connected.webtestclub.exception.controller.BadRequestException;
 import io.connected.webtestclub.exception.controller.ConflictException;
 import io.connected.webtestclub.exception.controller.NotFoundException;
 import io.connected.webtestclub.exception.service.DoesNotExistException;
 import io.connected.webtestclub.exception.service.DuplicateEntryException;
 import io.connected.webtestclub.exception.service.InvalidTodoNameException;
-import io.connected.webtestclub.model.ResponseModel;
+import io.connected.webtestclub.model.TODOModel;
+import io.connected.webtestclub.model.generic.ResponseModel;
 import io.connected.webtestclub.respository.entity.TODOEntity;
 import io.connected.webtestclub.service.TODOService;
 import org.junit.Before;
@@ -29,23 +31,23 @@ public class TODOControllerTest {
     }
 
     @Test(expected = BadRequestException.class)
-    public void shouldReturnBadRequestIfInvalidName() throws InvalidTodoNameException, BadRequestException, DuplicateEntryException, ConflictException {
+    public void shouldReturnBadRequestIfInvalidName() throws InvalidTodoNameException, HTTPException, DuplicateEntryException {
         when(service.save(any())).thenThrow(new InvalidTodoNameException());
-        TODOEntity entity = new TODOEntity();
+        TODOModel.SimpleTODOModel entity = new TODOModel.SimpleTODOModel();
         entity.setTodo("");
 
         controller.post(entity);
     }
 
     @Test(expected = NotFoundException.class)
-    public void shouldReturnNotFoundIfNonExistingId() throws DoesNotExistException, NotFoundException {
+    public void shouldReturnNotFoundIfNonExistingId() throws DoesNotExistException, HTTPException {
         doThrow(new DoesNotExistException()).when(service).delete(anyLong());
 
         controller.delete(42L);
     }
 
     @Test
-    public void shouldReturnSuccessAfterDeletingItem() throws DoesNotExistException, NotFoundException {
+    public void shouldReturnSuccessAfterDeletingItem() throws DoesNotExistException, HTTPException {
         doNothing().when(service).delete(anyLong());
 
         ResponseEntity<ResponseModel.Simple> response = controller.delete(42L);
@@ -54,10 +56,10 @@ public class TODOControllerTest {
     }
 
     @Test(expected = ConflictException.class)
-    public void shouldThrowExceptionWhenSavingDuplicateItem() throws DuplicateEntryException, InvalidTodoNameException, BadRequestException, ConflictException {
+    public void shouldThrowExceptionWhenSavingDuplicateItem() throws DuplicateEntryException, InvalidTodoNameException, HTTPException {
         doThrow(new DuplicateEntryException()).when(service).save(any());
 
-        controller.post(new TODOEntity());
+        controller.post(new TODOModel.SimpleTODOModel());
     }
 
     @Test
@@ -66,7 +68,7 @@ public class TODOControllerTest {
         todo.setTodo("test");
         doReturn(todo).when(service).getById(anyLong());
 
-        ResponseEntity<ResponseModel<TODOEntity>> result = controller.getById(1);
+        ResponseEntity<ResponseModel<TODOModel.SimpleTODOModel>> result = controller.getById(1);
 
         assert result.getStatusCode().value() == 200;
     }
