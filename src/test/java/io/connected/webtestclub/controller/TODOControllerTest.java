@@ -65,8 +65,9 @@ public class TODOControllerTest {
     @Test
     public void shouldReturnTodoWhenGetById() {
         TODOEntity todo = new TODOEntity();
+        TODOModel.SimpleTODOModel simpleTODOModel = new TODOModel.SimpleTODOModel(todo);
         todo.setTodo("test");
-        doReturn(todo).when(service).getById(anyLong());
+        doReturn(simpleTODOModel).when(service).getById(anyLong());
 
         ResponseEntity<ResponseModel<TODOModel.SimpleTODOModel>> result = controller.getById(1);
 
