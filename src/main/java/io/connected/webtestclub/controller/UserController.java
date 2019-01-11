@@ -1,5 +1,6 @@
 package io.connected.webtestclub.controller;
 
+import io.connected.webtestclub.exception.service.InvalidUserNameException;
 import io.connected.webtestclub.model.UserModel;
 import io.connected.webtestclub.model.generic.ResponseModel;
 import io.connected.webtestclub.service.UserService;
@@ -31,7 +32,7 @@ public class UserController {
 
 	@PostMapping(value = "/register", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> getCurrentUser(@RequestBody UserModel.DetailedUserModel userModel){
+	ResponseEntity<ResponseModel.Simple> getCurrentUser(@RequestBody UserModel.DetailedUserModel userModel) throws InvalidUserNameException {
 		userService.register(userModel);
 		return new ResponseEntity<>(new ResponseModel.Simple("Created"), HttpStatus.CREATED);
 	}
