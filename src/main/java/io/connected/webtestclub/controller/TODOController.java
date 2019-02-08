@@ -44,7 +44,7 @@ public class TODOController {
 
 	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOModel body) throws HTTPException {
+	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOModel.SimpleTODOModel body) throws HTTPException {
 		try {
 			todoService.save(body);
 		} catch (InvalidTodoNameException e) {
