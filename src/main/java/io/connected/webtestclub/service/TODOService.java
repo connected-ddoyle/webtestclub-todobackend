@@ -24,8 +24,8 @@ public class TODOService {
 		this.todoRepository = todoRepository;
 	}
 
-	public List<TODOModel.DetailedTODOModel> getAll() {
-		return todoRepository.findAll().stream().map(TODOModel.DetailedTODOModel::new).collect(Collectors.toList());
+	public List<TODOModel> getAll() {
+		return todoRepository.findAll().stream().map(TODOModel::new).collect(Collectors.toList());
 	}
 
 	public TODOEntity save(TODOModel body) throws InvalidTodoNameException, DuplicateEntryException {
@@ -50,8 +50,8 @@ public class TODOService {
 		}
 	}
 
-	public TODOModel.SimpleTODOModel getById(long id) {
+	public TODOModel getById(long id) {
 		Optional<TODOEntity> result = todoRepository.findById(id);
-		return result.map(TODOModel.SimpleTODOModel::new).orElse(null);
+		return result.map(TODOModel::new).orElse(null);
 	}
 }

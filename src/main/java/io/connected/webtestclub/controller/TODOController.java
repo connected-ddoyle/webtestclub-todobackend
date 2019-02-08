@@ -32,19 +32,19 @@ public class TODOController {
 
 	@GetMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<List<TODOModel.DetailedTODOModel>>> getAll(){
+	ResponseEntity<ResponseModel<List<TODOModel>>> getAll(){
 		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getAll()), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<TODOModel.SimpleTODOModel>> getById(@PathVariable long id){
+	ResponseEntity<ResponseModel<TODOModel>> getById(@PathVariable long id){
 		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getById(id)), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOModel.SimpleTODOModel body) throws HTTPException {
+	ResponseEntity<ResponseModel.Simple> post(@RequestBody TODOModel body) throws HTTPException {
 		try {
 			todoService.save(body);
 		} catch (InvalidTodoNameException e) {
