@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "2108574f-5d67-4171-8386-a8e695a812c9",
+		"name": "TODO - Web Test Club",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{domain}}/todo/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"todo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create TODO",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"todo\": \"Hire a PO!\"\n}"
+				},
+				"url": {
+					"raw": "{{domain}}/todo/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"todo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete TODO",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{domain}}/todo/1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"todo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
