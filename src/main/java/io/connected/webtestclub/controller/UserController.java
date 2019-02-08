@@ -1,5 +1,6 @@
 package io.connected.webtestclub.controller;
 
+import io.connected.webtestclub.exception.service.DuplicateUserException;
 import io.connected.webtestclub.exception.service.InvalidUserNameException;
 import io.connected.webtestclub.model.UserModel;
 import io.connected.webtestclub.model.generic.ResponseModel;
@@ -30,9 +31,9 @@ public class UserController {
 		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,userService.getUser(principal.getName())), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/register", produces = "application/json")
+	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> getCurrentUser(@RequestBody UserModel.DetailedUserModel userModel) throws InvalidUserNameException {
+	ResponseEntity<ResponseModel.Simple> create(@RequestBody UserModel.DetailedUserModel userModel) throws InvalidUserNameException, DuplicateUserException {
 		userService.register(userModel);
 		return new ResponseEntity<>(new ResponseModel.Simple("Created"), HttpStatus.CREATED);
 	}

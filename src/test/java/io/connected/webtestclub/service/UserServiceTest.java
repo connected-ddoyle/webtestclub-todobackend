@@ -1,5 +1,6 @@
 package io.connected.webtestclub.service;
 
+import io.connected.webtestclub.exception.service.DuplicateUserException;
 import io.connected.webtestclub.exception.service.InvalidUserNameException;
 import io.connected.webtestclub.model.UserModel;
 import io.connected.webtestclub.respository.UsersRepository;
@@ -26,7 +27,7 @@ public class UserServiceTest {
 	}
 
 	@Test(expected = InvalidUserNameException.class)
-	public void registerUserWithNullNameFails() throws InvalidUserNameException {
+	public void registerUserWithNullNameFails() throws InvalidUserNameException, DuplicateUserException {
 
 		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
 		userObject.setUsername(null);
@@ -36,7 +37,7 @@ public class UserServiceTest {
 	}
 
 	@Test(expected = InvalidUserNameException.class)
-	public void registerUserWithEmptyNameFails() throws InvalidUserNameException {
+	public void registerUserWithEmptyNameFails() throws InvalidUserNameException, DuplicateUserException {
 
 		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
 		userObject.setUsername("");
@@ -46,7 +47,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void registerValidUserCallsSave() throws InvalidUserNameException {
+	public void registerValidUserCallsSave() throws InvalidUserNameException, DuplicateUserException {
 
 		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
 		userObject.setUsername("mockUserName");
@@ -60,5 +61,14 @@ public class UserServiceTest {
 		service.register(userObject);
 
 		verify(usersRepository).save(userEntity);
+	}
+
+	@Test(expected = DuplicateUserException.class)
+	public void registerAlreadyExistingUserFails() throws DuplicateUserException, InvalidUserNameException {
+		doReturn(new UserEntity()).when(usersRepository).findByUsername(anyString());
+
+		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
+		userObject.setUsername("mockUserName");
+		service.register(userObject);
 	}
 }

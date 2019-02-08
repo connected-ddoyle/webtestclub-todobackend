@@ -1,5 +1,6 @@
 package io.connected.webtestclub.service;
 
+import io.connected.webtestclub.exception.service.DuplicateUserException;
 import io.connected.webtestclub.exception.service.InvalidUserNameException;
 import io.connected.webtestclub.model.UserModel;
 import io.connected.webtestclub.respository.UsersRepository;
@@ -19,9 +20,13 @@ public class UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	public void register(UserModel.DetailedUserModel userModel) throws InvalidUserNameException {
+	public void register(UserModel.DetailedUserModel userModel) throws InvalidUserNameException, DuplicateUserException {
 		if (userModel.getUsername() == null || userModel.getUsername().isEmpty()) {
 			throw new InvalidUserNameException();
+		}
+
+		if (usersRepository.findByUsername(userModel.getUsername()) != null) {
+			throw new DuplicateUserException();
 		}
 		UserEntity userEntity = userModel.getEntity();
 		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
