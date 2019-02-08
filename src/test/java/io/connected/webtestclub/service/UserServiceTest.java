@@ -20,7 +20,7 @@ public class UserServiceTest {
 	private PasswordEncoder passwordEncoder;
 
 	@Before
-	public void setup(){
+	public void setup() {
 		usersRepository = mock(UsersRepository.class);
 		passwordEncoder = mock(PasswordEncoder.class);
 		service = new UserService(usersRepository, passwordEncoder);

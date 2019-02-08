@@ -18,7 +18,7 @@ public class TODOServiceTest {
 	private TODORepository mockRepository;
 
 	@Before
-	public void setup(){
+	public void setup() {
 		mockRepository = mock(TODORepository.class);
 		service = new TODOService(mockRepository);
 	}

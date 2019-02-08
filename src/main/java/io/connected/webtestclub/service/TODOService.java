@@ -20,7 +20,7 @@ public class TODOService {
 	private final TODORepository todoRepository;
 
 	@Autowired
-	public TODOService(TODORepository todoRepository){
+	public TODOService(TODORepository todoRepository) {
 		this.todoRepository = todoRepository;
 	}
 
@@ -30,7 +30,7 @@ public class TODOService {
 
 	public TODOEntity save(TODOModel body) throws InvalidTodoNameException, DuplicateEntryException {
 
-		if(body.getTodo() == null || body.getTodo().trim().length() == 0)
+		if (body.getTodo() == null || body.getTodo().trim().length() == 0)
 			throw new InvalidTodoNameException();
 
 		TODOEntity result = todoRepository.findTODOEntityByTodo(body.getTodo());

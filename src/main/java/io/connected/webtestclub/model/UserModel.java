@@ -13,7 +13,8 @@ public abstract class UserModel {
 	protected String password;
 	protected String username;
 
-	protected UserModel() {}
+	protected UserModel() {
+	}
 
 	protected UserModel(UserEntity userEntity) {
 		this.id = userEntity.getId();
@@ -34,10 +35,11 @@ public abstract class UserModel {
 		return userEntity;
 	}
 
-	public static class SimpleUserModel extends UserModel{
+	public static class SimpleUserModel extends UserModel {
 		public SimpleUserModel(UserEntity user) {
 			super(user);
 		}
+
 		public SimpleUserModel() {
 		}
 
@@ -86,10 +88,12 @@ public abstract class UserModel {
 		}
 
 	}
-	public static class DetailedUserModel extends UserModel{
-		public DetailedUserModel(){}
 
-		public DetailedUserModel(UserEntity userEntity){
+	public static class DetailedUserModel extends UserModel {
+		public DetailedUserModel() {
+		}
+
+		public DetailedUserModel(UserEntity userEntity) {
 			super(userEntity);
 		}
 

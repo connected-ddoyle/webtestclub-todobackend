@@ -32,14 +32,14 @@ public class TODOController {
 
 	@GetMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<List<TODOModel>>> getAll(){
-		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getAll()), HttpStatus.OK);
+	ResponseEntity<ResponseModel<List<TODOModel>>> getAll() {
+		return new ResponseEntity<>(new ResponseModel<>("Ok!", todoService.getAll()), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<TODOModel>> getById(@PathVariable long id){
-		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,todoService.getById(id)), HttpStatus.OK);
+	ResponseEntity<ResponseModel<TODOModel>> getById(@PathVariable long id) {
+		return new ResponseEntity<>(new ResponseModel<>("Ok!", todoService.getById(id)), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", produces = "application/json")
@@ -57,7 +57,7 @@ public class TODOController {
 
 	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> delete(@PathVariable Long	 id) throws HTTPException {
+	ResponseEntity<ResponseModel.Simple> delete(@PathVariable Long id) throws HTTPException {
 		try {
 			todoService.delete(id);
 		} catch (DoesNotExistException dnee) {

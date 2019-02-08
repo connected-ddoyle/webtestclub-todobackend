@@ -10,8 +10,8 @@ public class TODOEntity {
 	private String todo;
 
 	@Id
-	@SequenceGenerator(name="todoSeq",sequenceName="todo_id_seq")
-	@GeneratedValue(strategy= GenerationType.SEQUENCE,generator="todoSeq")
+	@SequenceGenerator(name = "todoSeq", sequenceName = "todo_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "todoSeq")
 	@Column(name = "id", nullable = false)
 	public long getId() {
 		return id;

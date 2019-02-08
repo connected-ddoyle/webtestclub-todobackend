@@ -27,8 +27,8 @@ public class UserController {
 
 	@GetMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<UserModel>> getCurrentUser(Principal principal){
-		return new ResponseEntity<>(new ResponseModel<>("Ok!" ,userService.getUser(principal.getName())), HttpStatus.OK);
+	ResponseEntity<ResponseModel<UserModel>> getCurrentUser(Principal principal) {
+		return new ResponseEntity<>(new ResponseModel<>("Ok!", userService.getUser(principal.getName())), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", produces = "application/json")

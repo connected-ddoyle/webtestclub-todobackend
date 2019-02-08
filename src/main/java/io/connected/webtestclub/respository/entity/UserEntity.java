@@ -73,9 +73,7 @@ public class UserEntity {
 		if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
 		if (email != null ? !email.equals(that.email) : that.email != null) return false;
 		if (password != null ? !password.equals(that.password) : that.password != null) return false;
-		if (username != null ? !username.equals(that.username) : that.username != null) return false;
-
-		return true;
+		return username != null ? username.equals(that.username) : that.username == null;
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class UserAuthenticationService implements UserDetailsService{
+public class UserAuthenticationService implements UserDetailsService {
 	private final UsersRepository repository;
 
 	@Autowired
@@ -25,7 +25,7 @@ public class UserAuthenticationService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserEntity user = repository.findByUsername(username);
-		if(user == null) {
+		if (user == null) {
 			throw new UsernameNotFoundException("User not found");
 		}
 		List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("user"));

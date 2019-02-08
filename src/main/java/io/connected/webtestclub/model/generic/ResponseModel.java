@@ -11,7 +11,7 @@ public class ResponseModel<T> {
 	}
 
 
-	public static class Simple{
+	public static class Simple {
 		public final String message;
 
 		public Simple(String message) {

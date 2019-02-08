@@ -21,56 +21,56 @@ import static org.mockito.Mockito.*;
 
 public class TODOControllerTest {
 
-    private TODOController controller;
-    private TODOService service;
+	private TODOController controller;
+	private TODOService service;
 
-    @Before
-    public void setup(){
-         service = mock(TODOService.class);
-        controller = new TODOController(service);
-    }
+	@Before
+	public void setup() {
+		service = mock(TODOService.class);
+		controller = new TODOController(service);
+	}
 
-    @Test(expected = BadRequestException.class)
-    public void shouldReturnBadRequestIfInvalidName() throws InvalidTodoNameException, HTTPException, DuplicateEntryException {
-        when(service.save(any())).thenThrow(new InvalidTodoNameException());
-        TODOModel entity = new TODOModel();
-        entity.setTodo("");
+	@Test(expected = BadRequestException.class)
+	public void shouldReturnBadRequestIfInvalidName() throws InvalidTodoNameException, HTTPException, DuplicateEntryException {
+		when(service.save(any())).thenThrow(new InvalidTodoNameException());
+		TODOModel entity = new TODOModel();
+		entity.setTodo("");
 
-        controller.post(entity);
-    }
+		controller.post(entity);
+	}
 
-    @Test(expected = NotFoundException.class)
-    public void shouldReturnNotFoundIfNonExistingId() throws DoesNotExistException, HTTPException {
-        doThrow(new DoesNotExistException()).when(service).delete(anyLong());
+	@Test(expected = NotFoundException.class)
+	public void shouldReturnNotFoundIfNonExistingId() throws DoesNotExistException, HTTPException {
+		doThrow(new DoesNotExistException()).when(service).delete(anyLong());
 
-        controller.delete(42L);
-    }
+		controller.delete(42L);
+	}
 
-    @Test
-    public void shouldReturnSuccessAfterDeletingItem() throws DoesNotExistException, HTTPException {
-        doNothing().when(service).delete(anyLong());
+	@Test
+	public void shouldReturnSuccessAfterDeletingItem() throws DoesNotExistException, HTTPException {
+		doNothing().when(service).delete(anyLong());
 
-        ResponseEntity<ResponseModel.Simple> response = controller.delete(42L);
+		ResponseEntity<ResponseModel.Simple> response = controller.delete(42L);
 
-        assert response.getStatusCode().value() == 200;
-    }
+		assert response.getStatusCode().value() == 200;
+	}
 
-    @Test(expected = ConflictException.class)
-    public void shouldThrowExceptionWhenSavingDuplicateItem() throws DuplicateEntryException, InvalidTodoNameException, HTTPException {
-        doThrow(new DuplicateEntryException()).when(service).save(any());
+	@Test(expected = ConflictException.class)
+	public void shouldThrowExceptionWhenSavingDuplicateItem() throws DuplicateEntryException, InvalidTodoNameException, HTTPException {
+		doThrow(new DuplicateEntryException()).when(service).save(any());
 
-        controller.post(new TODOModel());
-    }
+		controller.post(new TODOModel());
+	}
 
-    @Test
-    public void shouldReturnTodoWhenGetById() {
-        TODOEntity todo = new TODOEntity();
-        TODOModel simpleTODOModel = new TODOModel(todo);
-        todo.setTodo("test");
-        doReturn(simpleTODOModel).when(service).getById(anyLong());
+	@Test
+	public void shouldReturnTodoWhenGetById() {
+		TODOEntity todo = new TODOEntity();
+		TODOModel simpleTODOModel = new TODOModel(todo);
+		todo.setTodo("test");
+		doReturn(simpleTODOModel).when(service).getById(anyLong());
 
-        ResponseEntity<ResponseModel<TODOModel>> result = controller.getById(1);
+		ResponseEntity<ResponseModel<TODOModel>> result = controller.getById(1);
 
-        assert result.getStatusCode().value() == 200;
-    }
+		assert result.getStatusCode().value() == 200;
+	}
 }
