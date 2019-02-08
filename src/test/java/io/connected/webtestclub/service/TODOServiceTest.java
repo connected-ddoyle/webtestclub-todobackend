@@ -25,7 +25,7 @@ public class TODOServiceTest {
 
 	@Test(expected = InvalidTodoNameException.class)
 	public void saveAnInvalidItem() throws InvalidTodoNameException, DuplicateEntryException {
-		TODOModel.SimpleTODOModel entity = new TODOModel.SimpleTODOModel();
+		TODOModel entity = new TODOModel();
 		service.save(entity);
 	}
 
@@ -39,7 +39,7 @@ public class TODOServiceTest {
 	@Test(expected = DuplicateEntryException.class)
 	public void saveATodoItem_shouldFail_whenDuplicateItemExists() throws InvalidTodoNameException, DuplicateEntryException {
 		doReturn(new TODOEntity()).when(mockRepository).findTODOEntityByTodo(anyString());
-		TODOModel.SimpleTODOModel data = new TODOModel.SimpleTODOModel();
+		TODOModel data = new TODOModel();
 		data.setTodo("x");
 		service.save(data);
 	}

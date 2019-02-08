@@ -33,7 +33,7 @@ public class TODOControllerTest {
     @Test(expected = BadRequestException.class)
     public void shouldReturnBadRequestIfInvalidName() throws InvalidTodoNameException, HTTPException, DuplicateEntryException {
         when(service.save(any())).thenThrow(new InvalidTodoNameException());
-        TODOModel.SimpleTODOModel entity = new TODOModel.SimpleTODOModel();
+        TODOModel entity = new TODOModel();
         entity.setTodo("");
 
         controller.post(entity);
@@ -59,17 +59,17 @@ public class TODOControllerTest {
     public void shouldThrowExceptionWhenSavingDuplicateItem() throws DuplicateEntryException, InvalidTodoNameException, HTTPException {
         doThrow(new DuplicateEntryException()).when(service).save(any());
 
-        controller.post(new TODOModel.SimpleTODOModel());
+        controller.post(new TODOModel());
     }
 
     @Test
     public void shouldReturnTodoWhenGetById() {
         TODOEntity todo = new TODOEntity();
-        TODOModel.SimpleTODOModel simpleTODOModel = new TODOModel.SimpleTODOModel(todo);
+        TODOModel simpleTODOModel = new TODOModel(todo);
         todo.setTodo("test");
         doReturn(simpleTODOModel).when(service).getById(anyLong());
 
-        ResponseEntity<ResponseModel<TODOModel.SimpleTODOModel>> result = controller.getById(1);
+        ResponseEntity<ResponseModel<TODOModel>> result = controller.getById(1);
 
         assert result.getStatusCode().value() == 200;
     }

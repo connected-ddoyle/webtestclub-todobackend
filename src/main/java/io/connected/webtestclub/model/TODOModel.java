@@ -31,4 +31,8 @@ public class TODOModel {
 		todoEntity.setTodo(todo);
 		return todoEntity;
 	}
+
+	public void setTodo(String todo) {
+		this.todo = todo;
+	}
 }
