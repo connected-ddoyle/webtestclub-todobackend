@@ -18,9 +18,16 @@ public class UserService {
 	public UserService(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
 		this.usersRepository = usersRepository;
 		this.passwordEncoder = passwordEncoder;
+		UserModel admin = new UserModel();
+		admin.setUsername("admin");
+		admin.setPassword("admin");
+		admin.setEmail("admin");
+		try {
+			register(admin);
+		} catch (Exception ignore) {}
 	}
 
-	public void register(UserModel.DetailedUserModel userModel) throws InvalidUserNameException, DuplicateUserException {
+	public void register(UserModel userModel) throws InvalidUserNameException, DuplicateUserException {
 		if (userModel.getUsername() == null || userModel.getUsername().isEmpty()) {
 			throw new InvalidUserNameException();
 		}
@@ -33,7 +40,7 @@ public class UserService {
 		usersRepository.save(userEntity);
 	}
 
-	public UserModel.SimpleUserModel getUser(String username) {
-		return new UserModel.SimpleUserModel(usersRepository.findByUsername(username));
+	public UserModel getUser(String username) {
+		return new UserModel(usersRepository.findByUsername(username));
 	}
 }

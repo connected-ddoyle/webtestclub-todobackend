@@ -33,7 +33,7 @@ public class UserController {
 
 	@PostMapping(value = "/", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel.Simple> create(@RequestBody UserModel.DetailedUserModel userModel) throws InvalidUserNameException, DuplicateUserException {
+	ResponseEntity<ResponseModel.Simple> create(@RequestBody UserModel userModel) throws InvalidUserNameException, DuplicateUserException {
 		userService.register(userModel);
 		return new ResponseEntity<>(new ResponseModel.Simple("Created"), HttpStatus.CREATED);
 	}
