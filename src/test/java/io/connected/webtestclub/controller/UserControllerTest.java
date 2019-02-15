@@ -26,8 +26,8 @@ public class UserControllerTest {
 	@Test
 	public void testCreateUser_isSuccessful() throws DuplicateUserException, InvalidUserNameException {
 		UserController userController = new UserController(userService);
-		doNothing().when(userService).register(any(UserModel.DetailedUserModel.class));
-		UserModel.DetailedUserModel newUser = new UserModel.DetailedUserModel();
+		doNothing().when(userService).register(any(UserModel.class));
+		UserModel newUser = new UserModel();
 		newUser.setUsername("Kel");
 		ResponseEntity<ResponseModel.Simple> response = userController.create(newUser);
 		assertEquals("Created", response.getBody().message);

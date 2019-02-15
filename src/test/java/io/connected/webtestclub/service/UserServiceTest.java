@@ -29,7 +29,7 @@ public class UserServiceTest {
 	@Test(expected = InvalidUserNameException.class)
 	public void registerUserWithNullNameFails() throws InvalidUserNameException, DuplicateUserException {
 
-		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
+		UserModel userObject = new UserModel();
 		userObject.setUsername(null);
 
 		service.register(userObject);
@@ -39,7 +39,7 @@ public class UserServiceTest {
 	@Test(expected = InvalidUserNameException.class)
 	public void registerUserWithEmptyNameFails() throws InvalidUserNameException, DuplicateUserException {
 
-		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
+		UserModel userObject = new UserModel();
 		userObject.setUsername("");
 
 		service.register(userObject);
@@ -49,7 +49,7 @@ public class UserServiceTest {
 	@Test
 	public void registerValidUserCallsSave() throws InvalidUserNameException, DuplicateUserException {
 
-		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
+		UserModel userObject = new UserModel();
 		userObject.setUsername("mockUserName");
 
 		doReturn(null).when(passwordEncoder).encode(anyString());
@@ -67,7 +67,7 @@ public class UserServiceTest {
 	public void registerAlreadyExistingUserFails() throws DuplicateUserException, InvalidUserNameException {
 		doReturn(new UserEntity()).when(usersRepository).findByUsername(anyString());
 
-		UserModel.DetailedUserModel userObject = new UserModel.DetailedUserModel();
+		UserModel userObject = new UserModel();
 		userObject.setUsername("mockUserName");
 		service.register(userObject);
 	}

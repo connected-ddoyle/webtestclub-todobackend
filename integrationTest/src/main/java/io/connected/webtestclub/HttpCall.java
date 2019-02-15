@@ -27,6 +27,16 @@ public class HttpCall {
 		}
 	}
 
+	public HttpResponse delete(String path) throws IOException {
+		Request request = new Request.Builder()
+				.url(getUrl(path))
+				.delete()
+				.build();
+		try (Response response = client.newCall(request).execute()) {
+			return new HttpResponse(response);
+		}
+	}
+
 	public HttpResponse post(String path, String jsonBody) throws IOException {
 		RequestBody body = RequestBody.create(JSON, jsonBody);
 		Request request = new Request.Builder()

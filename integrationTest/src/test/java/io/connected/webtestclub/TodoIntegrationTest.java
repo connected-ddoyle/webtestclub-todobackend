@@ -33,4 +33,10 @@ public class TodoIntegrationTest {
 		assertEquals(201, result.getHttpStatusCode());
 	}
 
+	//TODO Validate get now has the new item we've inserted.
+
+	//TODO Validate getting a single item through id.
+
+	//TODO Delete an item.
+
 }
