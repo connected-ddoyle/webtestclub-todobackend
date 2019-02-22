@@ -38,8 +38,13 @@ public class TODOController {
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public @ResponseBody
-	ResponseEntity<ResponseModel<TODOModel>> getById(@PathVariable long id) {
-		return new ResponseEntity<>(new ResponseModel<>("Ok!", todoService.getById(id)), HttpStatus.OK);
+	ResponseEntity<ResponseModel<TODOModel>> getById(@PathVariable long id)  throws HTTPException {
+		try {
+			return new ResponseEntity<>(new ResponseModel<>("Ok!", todoService.getById(id)), HttpStatus.OK);
+		}
+		catch (DoesNotExistException dnee) {
+		throw new NotFoundException(dnee);
+	}
 	}
 
 	@PostMapping(value = "/", produces = "application/json")

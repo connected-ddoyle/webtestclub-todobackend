@@ -50,8 +50,11 @@ public class TODOService {
 		}
 	}
 
-	public TODOModel getById(long id) {
+	public TODOModel getById(long id) throws DoesNotExistException{
 		Optional<TODOEntity> result = todoRepository.findById(id);
-		return result.map(TODOModel::new).orElse(null);
+		if (!result.isPresent()){
+			throw new DoesNotExistException();
+		}
+		return new TODOModel(result.get());
 	}
 }
